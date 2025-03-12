@@ -1,0 +1,112 @@
+function onChange(control, oldValue, newValue, isLoading) {
+    if (isLoading || newValue == '') {
+        return;
+    }
+
+    var ok = true;
+    var abono = g_form.getValue("deseja_abono_pecuniario");
+    var parcela = g_form.getValue("parcelar_ferias");
+    var periodos = g_form.getValue("quantos_periodos");
+
+    var dias_1 = parseFloat(g_form.getValue("total_de_dias_1_periodo"));
+    var dias_2 = parseFloat(g_form.getValue("total_de_dias_2_periodo"));
+    var dias_3 = parseFloat(g_form.getValue("dias_periodo_terceiro"));
+
+
+    if (parcela == 'sim') {
+        if (periodos == 'dois') {
+            if (abono == 'nao') {
+                if (dias_1 < 14) {
+                    g_form.addErrorMessage('O primeiro per�odo de f�rias n�o pode ser menor que 14 dias, por gentileza ajuste');
+                    ok = false;
+                } else if ((dias_1 && dias_2) && (dias_1 == 14 && (dias_2 !== 16))) {
+                    g_form.addErrorMessage('Voc� optou por dividir suas f�rias em dois periodos sem abono, o primeiro per�odo tem 14 dias mas o segundo n�o tem 16, verifique.');
+                    ok = false;
+                } else if ((dias_1 && dias_2) && (dias_1 == 20 && (dias_2 !== 10))) {
+                    g_form.addErrorMessage('Voc� optou por dividir suas f�rias em dois periodos sem abono, o primeiro per�odo tem 20 dias mas o segundo n�o tem 20, verifique.');
+                    ok = false;
+                } else if ((dias_1 && dias_2) && (dias_1 == 21 && (dias_2 !== 9))) {
+                    g_form.addErrorMessage('Voc� optou por dividir suas f�rias em dois periodos sem abono, o primeiro per�odo tem 14 dias mas o segundo n�o tem 16, verifique.');
+                    ok = false;
+                } else if ((dias_1 && dias_2) && (dias_1 == 18 && (dias_2 !== 12))) {
+                    g_form.addErrorMessage('Voc� optou por dividir suas f�rias em dois periodos sem abono, o primeiro per�odo tem 18 dias mas o segundo n�o tem 12, verifique.');
+                    ok = false;
+                } else if ((dias_1 && dias_2) && (dias_1 == 24 && (dias_2 !== 6))) {
+                    g_form.addErrorMessage('Voc� optou por dividir suas f�rias em dois periodos sem abono, o primeiro per�odo tem 24 dias mas o segundo n�o tem 6, verifique.');
+                    ok = false;
+                } else if ((dias_1 && dias_2) && (dias_1 == 25 && (dias_2 !== 5))) {
+                    g_form.addErrorMessage('Voc� optou por dividir suas f�rias em dois periodos sem abono, o primeiro per�odo tem 25 dias mas o segundo n�o tem 5, verifique.');
+                    ok = false;
+                }
+            } else if (abono == 'sim') {
+                if ((dias_1 && dias_2) && (dias_1 !== 14 || dias_2 !== 6)) {
+                    g_form.addErrorMessage('Voc� optou por dividir suas f�rias em dois periodos com abono, o primeiro per�odo deve ter 14 dias e o segundo 6, verifique.');
+                    ok = false;
+                }else if ((dias_1 && dias_2) && (dias_1 !== 6 || dias_2 !== 14)) {
+                    g_form.addErrorMessage('Voc� optou por dividir suas f�rias em dois periodos com abono, o primeiro per�odo deve ter 6 dias e o segundo 14, verifique.');
+                    ok = false;
+                }else if ((dias_1 && dias_2) && (dias_1 !== 15 || dias_2 !== 5)) {
+                    g_form.addErrorMessage('Voc� optou por dividir suas f�rias em dois periodos com abono, o primeiro per�odo deve ter 15 dias e o segundo 5, verifique.');
+                    ok = false;
+                }else if ((dias_1 && dias_2) && (dias_1 !== 5 || dias_2 !== 15)) {
+                    g_form.addErrorMessage('Voc� optou por dividir suas f�rias em dois periodos com abono, o primeiro per�odo deve ter 5 dias e o segundo 15, verifique.');
+                    ok = false;
+                }
+            }
+
+            if (!ok) {
+                g_form.setValue("data_de_inicio", "");
+                g_form.setValue("data_de_inicio_2", "");
+                g_form.setValue("data_de_termino", "");
+				g_form.setValue("data_de_termino_2", "");
+                g_form.setValue("data_de_inicio_terceiro", "");
+                g_form.setValue("data_de_termino_terceiro", "");
+            }
+
+        } else if (periodos == 'tres') {
+
+            if (dias_1 < 14) {
+                g_form.addErrorMessage('O primeiro per�odo de f�rias n�o pode ser menor que 14 dias, por gentileza ajuste');
+                ok = false;
+            } else if ((dias_1 && dias_2 && dias_3) && (dias_1 == 14 && (dias_2 !== 8 || dias_3 !== 8))) {
+                g_form.addErrorMessage('Voc� optou por dividir suas f�rias em tr�s periodos, o primeiro per�odo tem 14 dias mas o segundo e terceiro n�o totalizam 16, verifique.');
+                ok = false;
+            } else if ((dias_1 && dias_2 && dias_3) && (dias_1 == 15 && (dias_2 !== 7 || dias_3 !== 8))) {
+                g_form.addErrorMessage('Voc� optou por dividir suas f�rias em tr�s periodos, o primeiro per�odo tem 15 dias mas o segundo e terceiro n�o totalizam 15, verifique.');
+                ok = false;
+            } else if ((dias_1 && dias_2 && dias_3) && (dias_1 == 16 && (dias_2 !== 7 || dias_3 !== 7))) {
+                g_form.addErrorMessage('Voc� optou por dividir suas f�rias em tr�s periodos, o primeiro per�odo tem 16 dias mas o segundo e terceiro n�o totalizam 14, verifique.');
+                ok = false;
+            } else if ((dias_1 && dias_2 && dias_3) && (dias_1 == 20 && (dias_2 !== 5 || dias_3 !== 5))) {
+                g_form.addErrorMessage('Voc� optou por dividir suas f�rias em tr�s periodos, o primeiro per�odo tem 20 dias mas o segundo e terceiro n�o totalizam 10, verifique.');
+                ok = false;
+            }
+
+            if (!ok) {
+                g_form.setValue("data_de_inicio", "");
+                g_form.setValue("data_de_inicio_2", "");
+                g_form.setValue("data_de_termino", "");
+				g_form.setValue("data_de_termino_2", "");
+                g_form.setValue("data_de_inicio_terceiro", "");
+                g_form.setValue("data_de_termino_terceiro", "");
+            }
+        }
+    } else if (parcela == 'nao') {
+        if (abono == 'nao') {
+            if (dias_1 !== 30) {
+                g_form.addErrorMessage('Voc� optou por n�o dividir suas f�rias e n�o pedir abono,seu per�odo de f�rias deve ter 30 dias');
+                g_form.setValue("data_de_inicio", "");
+                g_form.setValue("data_de_termino", "");
+            }
+        } else if (abono == 'sim') {
+            if (dias_1 !== 20) {
+                g_form.addErrorMessage('Voc� optou por n�o dividir suas f�rias e pedir abono, seu per�odo de f�rias deve ter 20 dias');
+                g_form.setValue("data_de_inicio", "");
+                g_form.setValue("data_de_termino", "");
+            }
+        }
+    }
+    console.log('1 >>>>' + dias_1 + '-' + typeof dias_1);
+    console.log('2 >>>>' + dias_2 + '-' + typeof dias_2);
+    console.log('3 >>>>' + dias_3 + '-' + typeof dias_3);
+}
